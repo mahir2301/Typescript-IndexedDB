@@ -239,6 +239,7 @@ function createTotal() {
     request.onsuccess = function (e) {
         var data = request.result;
         var total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; //Variable for calculating total 
+        var checkNaN = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         var checkInclude = [0]; //Variable for checking that we don't do same worker more than once
         for (var i = 0; i < data.length; i++) {
             if (!include(checkInclude, data[i].WorkerId)) {
@@ -246,14 +247,24 @@ function createTotal() {
                 for (var j = 0; j < months.length; j++) {
                     var monthData = document.getElementById(team + "_worker" + data[i].WorkerId + "_" + months[j] + "/" + year).innerHTML;
                     if (monthData != null) {
-                        total[j] += parseFloat(monthData);
+                        if (!isNaN(parseFloat(monthData))) {
+                            total[j] += parseFloat(monthData);
+                        }
+                        else {
+                            checkNaN[j]++;
+                        }
                     }
                 }
             }
         }
         //Calculating the total for each month
         for (var i = 0; i < months.length; i++) {
-            total[i] = total[i] / (checkInclude.length - 1);
+            if (checkInclude.length != (checkNaN[i] + 1)) {
+                total[i] = total[i] / (checkInclude.length - 1 - checkNaN[i]);
+            }
+            else {
+                total[i] = NaN;
+            }
         }
         //Creating total row in the table
         var totalTr = document.createElement("tfoot");
@@ -262,7 +273,7 @@ function createTotal() {
         var totalData = '<tr> <td class="tableTotal">Total:</td>';
         for (var i = 0; i < months.length; i++) {
             if (isNaN(total[i])) {
-                totalData += '<td id="' + team + '_Total_' + year + '/' + months[i] + '" class="tableTotal">-</td>';
+                totalData += '<td id="' + team + '_Total_' + year + '/' + months[i] + '" class="tableTotalData">-</td>';
             }
             else {
                 totalData += '<td id="' + team + '_Total_' + year + '/' + months[i] + '" class="tableTotalData">' + total[i].toFixed(1) + "%" + '</td>';
