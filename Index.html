@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Dccs</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="database.js"></script>
+    <script src="filter.js"></script>
+    <script src="main.js"></script>
+  
+</head>
+<body onload="creatDB()">
+
+     <h3><b> Raports|Team(s)</b></h3>
+     <hr class="hrstyle">
+     
+    <div class="filterFrame">
+        <input type="button" id="FilterButton" class="filterBtn" value="- Filter" onclick="ShowHideFilter()">
+        <div id="FilterField" class="showFilter">
+
+            <div class="teamDrop">
+                <div class="selectTeam" >
+                    <select id="teamSelect" onclick="CreatCheckList()">
+                        <option disabled selected hidden>Select team</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="yearDiv">
+                <select id="yearSelect">
+                    <option id="yearOption" value="2017" >2017</option>
+                    <option id="yearOption" value="2016" >2016</option>
+                </select>
+            </div>
+            <div class="teamCheck" id="checkTeam"> </div>
+            
+            <button onclick="checkedTeam()" class="showBtn">Show</button>
+        </div>
+    </div>
+
+    <div id="nameNode"> </div>
+    <div id="tableNode"></div>
+
+</body>
+</html>

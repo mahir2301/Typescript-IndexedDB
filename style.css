@@ -1,0 +1,253 @@
+.hrstyle {
+    margin-top: -12pt;
+}
+
+.btn {
+    margin-left: 90pt;
+}
+
+
+.filterFrame {
+    min-height: 15pt;
+    margin-top: 10pt;
+    border-style: groove;
+    max-height: 45px;
+}
+
+.filterBtn {
+    width:60px;
+    height: 25px;
+    position: absolute;
+    left: 18pt;
+    top: 36pt;
+    border-radius: 2px;
+    border: none;
+    background-color:#F5F5F5;
+}
+
+.filterBtn:hover{
+    background-color: #979797
+}
+
+.showFilter {
+    display: inline;
+}
+
+.hideFilter {
+    display: none;
+}
+
+.teamDrop{
+ 
+    width: 150px;
+    padding-left:20%;
+    padding-top: 10px;
+}
+
+.selectTeam{
+    position: relative;
+}
+
+.selectTeam select{
+    width: 100%;
+    font-weight: bold;
+}
+
+.teamCheck{
+    display: none;
+    background-color: rgb(228, 222, 225);
+    position: fixed;
+    left: 20.5%;
+    right: 0;
+    top: 91px;
+    bottom: 0;  
+    width:147px;
+    height:50px;
+    border: 1px #dadada solid;
+    border-radius: 2px;
+}
+  
+.teamCheck label {
+    display: block;
+}
+
+.checkBox {
+    float:left;
+}
+
+.yearDiv{
+    position: relative;
+    bottom: 19px;
+    left: 40%;
+    width: 150px; 
+}
+  
+.yearDiv select{
+    width: 100%;
+}
+
+.showBtn {
+    position: relative;
+    bottom: 39px;
+    left: 60%;
+    border-radius: 2px;
+    border: none;
+    height: 20px;
+    width: 55px;
+    background-color:#F5F5F5;
+}
+
+.showBtn:hover{
+    background-color: #979797;
+}
+
+.filterName {
+    position: relative;
+    top:10px;
+    text-align: center;
+    background-color: rgb(231, 231, 231);
+}
+
+.tableMain {
+    border-collapse: collapse;
+    width:100%;
+    position: relative;
+    bottom: 10px;
+    border-radius: 2px;
+    table-layout: auto;
+}
+
+.tableTd {
+    border: 1px solid #ddd;
+    padding: 8px;
+    font-size: 15px;
+    border-collapse: collapse;
+}
+
+.tableMain th{
+    border: 1px solid #ddd;
+    padding: 8px;
+    background-color:#F5F5F5;
+    border-bottom: 1px solid #525151;
+    border-collapse: collapse;
+}
+
+.tableMain td:hover{
+    background-color: #ddd;
+}
+
+.tableMain tr:nth-child(odd){
+    background-color: #f2f2f2;
+}
+
+.tableTotal {
+    padding: 8px;
+    font-size: 15px;
+    border-collapse: collapse;
+    text-align:right;
+    background-color:rgb(207, 207, 207);
+}
+.tableTotalData {
+    padding: 8px;
+    font-size: 15px;
+    border-collapse: collapse;
+    background-color:rgb(207, 207, 207);
+}
+
+
+.popupDiv {
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 30%;
+    top: 10%;
+    overflow: auto;
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    min-width: 30%;
+    min-height: 40%;
+    border-radius: 4px;
+}
+
+.close {
+    color: #202020;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: relative;
+    bottom: 20px;
+    right: -10px;
+}
+
+.close:hover,
+.close:focus{
+    color: #aaaaaa;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.popupHeader {
+    position: relative;
+    bottom: 30px;
+    cursor: move;
+}
+
+.save {
+    position: relative;
+    bottom: 10px;
+    height: 20px;
+    width: 50px;
+    text-align: center;
+    border-radius: 2px;
+    border: none;
+    background-color: #F5F5F5;
+}
+
+.save:hover{
+    background-color:#979797;
+}
+
+.popuptable {
+    border-collapse: collapse;
+    width:100%;
+    position: relative;
+    bottom: 20px;
+    border-radius: 2px;
+    font-size: 12px;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+.popuptable  th,td {
+    border: 1px solid #ddd;
+    padding: 4px;
+    font-size: 12px;
+}
+.popuptable th{
+    border-bottom: 1px solid #525151;
+    background-color:#F5F5F5;
+}
+
+.popuptable td:hover{
+    background-color: #ddd;
+}
+
+.popuptable tr:nth-child(odd){
+    background-color: #f2f2f2;
+    
+}
+
+.tablefooter {
+    background-color:rgb(207, 207, 207);
+    text-align: right;
+    font-size: 12px;
+}
+
+.popuphrstyle {
+    margin-top: -30px;
+    position: relative;
+    bottom: 20px;
+    width: 100%;
+    color: #F5F5F5;
+}
