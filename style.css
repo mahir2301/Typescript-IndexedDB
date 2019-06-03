@@ -22,7 +22,7 @@
     top: 36pt;
     border-radius: 2px;
     border: none;
-    background-color:#F5F5F5;
+    background-color:rgb(197, 197, 197);
 }
 
 .filterBtn:hover{
@@ -94,7 +94,7 @@
     border: none;
     height: 20px;
     width: 55px;
-    background-color:#F5F5F5;
+    background-color:rgb(197, 197, 197);
 }
 
 .showBtn:hover{
@@ -127,7 +127,7 @@
 .tableMain th{
     border: 1px solid #ddd;
     padding: 8px;
-    background-color:#F5F5F5;
+    background-color:rgba(206, 206, 206, 0.877);
     border-bottom: 1px solid #525151;
     border-collapse: collapse;
 }
@@ -137,7 +137,7 @@
 }
 
 .tableMain tr:nth-child(odd){
-    background-color: #f2f2f2;
+    background-color: rgb(206, 205, 205);
 }
 
 .tableTotal {
@@ -199,7 +199,7 @@
     text-align: center;
     border-radius: 2px;
     border: none;
-    background-color: #F5F5F5;
+    background-color: rgb(197, 197, 197);
 }
 
 .save:hover{
@@ -224,7 +224,7 @@
 }
 .popuptable th{
     border-bottom: 1px solid #525151;
-    background-color:#F5F5F5;
+    background-color:rgb(197, 197, 197);
 }
 
 .popuptable td:hover{
@@ -232,7 +232,7 @@
 }
 
 .popuptable tr:nth-child(odd){
-    background-color: #f2f2f2;
+    background-color: rgb(197, 197, 197);
     
 }
 
@@ -247,5 +247,5 @@
     position: relative;
     bottom: 20px;
     width: 100%;
-    color: #F5F5F5;
+    color: rgb(197, 197, 197);
 }

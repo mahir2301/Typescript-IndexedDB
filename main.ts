@@ -532,7 +532,7 @@ const requestProjects = readIndex("coreStore"+saveYear,"WorkerId",key);
                 const getDataStr = document.getElementById(saveTeam+saveYear+"Week"+j+"_worker"+key+"_"+month+"_project"+i).innerHTML;
                 const getData:number = parseFloat(getDataStr);
                 if (isNaN(getData) || getData<0 || getData >5){
-                    alert("Wrong input data!");
+                    alert("Wrong input data for work on projects!");
                     return;
                 }else{
                     project[j] = getData;
@@ -542,7 +542,7 @@ const requestProjects = readIndex("coreStore"+saveYear,"WorkerId",key);
             projects[i] = changeMonth(month,project,projects[i]);   //Updating the month with the current month
             const getProject = document.getElementById(saveTeam+saveYear+"Project"+i+"_worker"+key+"_"+month).innerHTML;
             if (getProject.length < 1 || getProject == "<br>"){
-                alert("Wrong input data!");
+                alert("Wrong input data for project name!");
                 return;
             }else {
                 projects[i].Project = getProject;

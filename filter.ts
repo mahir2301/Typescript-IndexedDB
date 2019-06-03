@@ -96,6 +96,8 @@ function getSum (sum: number, num : number){
 }
 //Close div function
 function closeDiv(month:string,key:number,saveYear:string){
+    popupPostionTop -=1;
+    popupPostionLeft -=1;
     const parentNode = document.getElementById("nameNode") as HTMLParagraphElement;
     const div = document.getElementById(saveYear+"popUp"+key+"_"+month);
     parentNode.removeChild(div);
@@ -133,93 +135,98 @@ function getMondays(month:string){
 
 //Find which month in the interface the "month" is
 function findMonth(month:string, worker:yearAvailable){
-    if (month == "Jan"){
-        return worker.Jan;
-    }
-    if (month == "Feb"){
-        return worker.Feb;
-    }
-    if (month == "Mar"){
-        return worker.Mar;
-    }
-    if (month == "Apr"){
-        return worker.Apr;
-    }
-    if (month == "Mai"){
-        return worker.Mai;
-    }
-    if (month == "Jun"){
-        return worker.Jun;
-    }
-    if (month == "Jul"){
-        return worker.Jul;
-    }
-    if (month == "Aug"){
-        return worker.Aug;
-    }
-    if (month == "Sep"){
-        return worker.Sep;
-    }
-    if (month == "Oct"){
-        return worker.Oct;
-    }
-    if (month == "Nov"){
-        return worker.Nov;
-    }
-    if (month == "Dec"){
-        return worker.Dec;
+    switch (month){
+        case "Jan" :{
+            return worker.Jan;
+        }
+        case "Feb" :{
+            return worker.Feb;
+        }
+        case "Mar" :{
+            return worker.Mar;
+        }
+        case "Apr" :{
+            return worker.Apr;
+        }
+        case "Mai" :{
+            return worker.Mai;
+        }
+        case "Jun" :{
+            return worker.Jun;
+        }
+        case "Jul" :{
+            return worker.Jul;
+        }
+        case "Aug" :{
+            return worker.Aug;
+        }
+        case "Sep" :{
+            return worker.Sep;
+        }
+        case "Oct" :{
+            return worker.Oct;
+        }
+        case "Nov" :{
+            return worker.Nov;
+        }
+        case "Dec" :{
+            return worker.Dec;
+        }
     }
 }
 
 //Checnges the month in the strucutre of chose with "month"
 function changeMonth(month:string, available:number[],availableYear:yearAvailable|coreData){
-    if (month == "Jan"){
-        availableYear.Jan=available;
-        return availableYear;
-    }
-    if (month == "Feb"){
-        availableYear.Feb=available;
-        return availableYear;
-    }
-    if (month == "Mar"){
-        availableYear.Mar=available;
-        return availableYear;
-    }
-    if (month == "Apr"){
-        availableYear.Apr=available;
-        return availableYear;
-    }
-    if (month == "Mai"){
-        availableYear.Mai=available;
-        return availableYear;
-    }
-    if (month == "Jun"){
-        availableYear.Jun=available;
-        return availableYear;
-    }
-    if (month == "Jul"){
-        availableYear.Jul=available;
-        return availableYear;
-    }
-    if (month == "Aug"){
-        availableYear.Aug=available;
-        return availableYear;
-    }
-    if (month == "Sep"){
-        availableYear.Sep=available;
-        return availableYear;
-    }
-    if (month == "Oct"){
-        availableYear.Oct=available;
-        return availableYear;
-    }
-    if (month == "Nov"){
-        availableYear.Nov=available;
-        return availableYear;
-    }
-    if (month == "Dec"){
-        availableYear.Dec=available;
-        return availableYear;
+    switch (month){
+        case "Jan":{
+            availableYear.Jan=available;
+            return availableYear;
+        }
+        case "Feb" :{
+            availableYear.Feb=available;
+            return availableYear;
+        }
+    
+        case "Mar" :{
+            availableYear.Mar=available;
+            return availableYear;
+        }
+        case "Apr" :{
+            availableYear.Apr=available;
+            return availableYear;
+        }
+        case "Mai" :{
+            availableYear.Mai=available;
+            return availableYear;
+        }
+        case "Jun" :{
+            availableYear.Jun=available;
+            return availableYear;
+        }
+        case "Jul" :{
+            availableYear.Jul=available;
+            return availableYear;
+        }
+        case "Aug" :{
+            availableYear.Aug=available;
+            return availableYear;
+        }
+        case "Sep" :{
+            availableYear.Sep=available;
+            return availableYear;
+        }
+        case "Oct" :{
+            availableYear.Oct=available;
+            return availableYear;
+        }
+        case "Nov" :{
+            availableYear.Nov=available;
+            return availableYear;
+        }
+        case "Dec" :{
+            availableYear.Dec=available;
+            return availableYear;
+        }
     }
 }
 

@@ -475,7 +475,7 @@ function updateProjects(month, key, saveYear, saveTeam) {
                 var getDataStr = document.getElementById(saveTeam + saveYear + "Week" + j + "_worker" + key + "_" + month + "_project" + i).innerHTML;
                 var getData = parseFloat(getDataStr);
                 if (isNaN(getData) || getData < 0 || getData > 5) {
-                    alert("Wrong input data!");
+                    alert("Wrong input data for work on projects!");
                     return { value: void 0 };
                 }
                 else {
@@ -485,7 +485,7 @@ function updateProjects(month, key, saveYear, saveTeam) {
             projects[i] = changeMonth(month, project, projects[i]); //Updating the month with the current month
             var getProject = document.getElementById(saveTeam + saveYear + "Project" + i + "_worker" + key + "_" + month).innerHTML;
             if (getProject.length < 1 || getProject == "<br>") {
-                alert("Wrong input data!");
+                alert("Wrong input data for project name!");
                 return { value: void 0 };
             }
             else {
