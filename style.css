@@ -159,8 +159,6 @@
     position: fixed;
     z-index: 1;
     padding-top: 100px;
-    left: 30%;
-    top: 10%;
     overflow: auto;
     background-color: #fefefe;
     padding: 20px;
