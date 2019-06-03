@@ -5,6 +5,8 @@ var team;
 var year;
 var tableLength = 0;
 var tableDoneCheck = 1;
+var popupPostionLeft = 30;
+var popupPostionTop = 10;
 //Function for getting the objectstore with the basic information and building the dropdown option for team
 function CreatCheckList() {
     expendCheck(); //fucntion for expanding and closing dropdown
@@ -293,6 +295,12 @@ function openNewTable(month, key) {
     if (checkDiv == null) {
         popupDiv.setAttribute("id", year + "popUp" + key + "_" + month);
         popupDiv.setAttribute("class", "popupDiv");
+        popupPostionTop += 1;
+        var postionTop = popupPostionTop.toString() + "%";
+        popupDiv.style.top = postionTop;
+        popupPostionLeft += 1;
+        var postionLeft = popupPostionLeft.toString() + "%";
+        popupDiv.style.left = postionLeft;
         parentNode.appendChild(popupDiv);
         //Makign the close button
         var close_1 = document.createElement("span");
@@ -476,7 +484,13 @@ function updateProjects(month, key, saveYear, saveTeam) {
             }
             projects[i] = changeMonth(month, project, projects[i]); //Updating the month with the current month
             var getProject = document.getElementById(saveTeam + saveYear + "Project" + i + "_worker" + key + "_" + month).innerHTML;
-            projects[i].Project = getProject;
+            if (getProject.length < 1 || getProject == "<br>") {
+                alert("Wrong input data!");
+                return { value: void 0 };
+            }
+            else {
+                projects[i].Project = getProject;
+            }
             //Updating the object store with the new data
             var updated = updateData("coreStore" + saveYear, projects[i]);
             updated.onsuccess = function (e) {

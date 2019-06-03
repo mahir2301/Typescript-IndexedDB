@@ -10,6 +10,9 @@ let year: string;
 let tableLength: number= 0;
 let tableDoneCheck : number =1;
 
+let popupPostionLeft = 30;
+let popupPostionTop = 10;
+
 //Function for getting the objectstore with the basic information and building the dropdown option for team
 function CreatCheckList(){
 
@@ -338,6 +341,12 @@ function openNewTable(month:string, key :number){
     if (checkDiv==null){
         popupDiv.setAttribute("id",year+"popUp"+key+"_"+month);
         popupDiv.setAttribute("class", "popupDiv");
+        popupPostionTop += 1;
+        const postionTop = popupPostionTop.toString()+"%";
+        popupDiv.style.top = postionTop;
+        popupPostionLeft += 1;
+        const postionLeft = popupPostionLeft.toString()+"%";
+        popupDiv.style.left = postionLeft;
         parentNode.appendChild(popupDiv);
 
         //Makign the close button
@@ -532,8 +541,12 @@ const requestProjects = readIndex("coreStore"+saveYear,"WorkerId",key);
 
             projects[i] = changeMonth(month,project,projects[i]);   //Updating the month with the current month
             const getProject = document.getElementById(saveTeam+saveYear+"Project"+i+"_worker"+key+"_"+month).innerHTML;
-            projects[i].Project = getProject;
-
+            if (getProject.length < 1 || getProject == "<br>"){
+                alert("Wrong input data!");
+                return;
+            }else {
+                projects[i].Project = getProject;
+            }
             //Updating the object store with the new data
             const updated = updateData("coreStore"+saveYear, projects[i])     
             updated.onsuccess = e =>{
