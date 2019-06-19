@@ -264,7 +264,7 @@ function dragDiv(header,div){
 
 }
 
-//Includes mehtod 
+//Includes function 
 function include(inputArray,checkString){
     let isInlcuded = false;
     for (let i = 0; i < inputArray.length; i++){
@@ -275,3 +275,9 @@ function include(inputArray,checkString){
     return isInlcuded;
 }
 
+//Fucntion for closing the form
+function closeForm(){
+    const parentNode = document.getElementById("nameNode") as HTMLParagraphElement;
+    const div = document.getElementById("inputFormDiv");
+    parentNode.removeChild(div);
+}

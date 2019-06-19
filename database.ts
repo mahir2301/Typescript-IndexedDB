@@ -1,12 +1,11 @@
 interface teamsInterfacs{
+    id:number,
 	teamName:string;
-	years: string[];
-	workersYear: number [];
 }
 
 let teamDB: teamsInterfacs[] = [
-	{ teamName:"Web" , years: ["2016" , "2017"], workersYear: [ 3 , 2] },
-	{ teamName:"Backend", years: ["2016" , "2017"], workersYear: [ 0 , 2]},
+	{ id:1 ,teamName:"Web" },
+	{ id:2 ,teamName:"Backend"},
 ]
 
 
@@ -79,6 +78,68 @@ let yearAvailable2016DB :yearAvailable[] = [
 { WorkerId :	3	, Name :	"Anross Rossi"	, Jan :	[ 5, 5, 5, 5]	, Feb :	[ 5, 5, 4, 5, 5]	, Mar :	[ 5, 5, 5, 5]	, Apr :	[ 5, 5, 5, 5]	, Mai :	[ 5, 5, 5, 5 ,5]	, Jun :	[ 5, 5, 5, 5]	, Jul :	[ 5, 5, 5, 5]	, Aug :	[0, 0, 0, 0,0]		, Sep :	[ 5, 5, 5, 5]	, Oct : 	[ 5, 5, 5, 5 ,5]	, Nov :	[ 5, 5, 5, 5]	, Dec :	[ -1, -1, -1, -1 ]	},
 ];
 
+//Templates for the input data
+
+let templateCore2017: coreData = {} as any;
+templateCore2017.Jan = [0, 0 ,0 ,0, 0];
+templateCore2017.Feb = [0, 0 ,0 ,0];
+templateCore2017.Mar = [0, 0 ,0 ,0];
+templateCore2017.Apr = [0, 0 ,0 ,0];
+templateCore2017.Mai = [0, 0 ,0 ,0, 0];
+templateCore2017.Jun = [0, 0 ,0 ,0];
+templateCore2017.Jul = [0, 0 ,0 ,0, 0];
+templateCore2017.Aug = [0, 0 ,0 ,0];
+templateCore2017.Sep = [0, 0 ,0 ,0];
+templateCore2017.Oct = [0, 0 ,0 ,0, 0];
+templateCore2017.Nov = [0, 0 ,0 ,0];
+templateCore2017.Dec = [0, 0 ,0 ,0];
+
+let templateCore2016: coreData = {} as any;
+templateCore2016.Jan = [0, 0 ,0 ,0];
+templateCore2016.Feb = [0, 0 ,0 ,0, 0];
+templateCore2016.Mar = [0, 0 ,0 ,0];
+templateCore2016.Apr = [0, 0 ,0 ,0];
+templateCore2016.Mai = [0, 0 ,0 ,0, 0];
+templateCore2016.Jun = [0, 0 ,0 ,0];
+templateCore2016.Jul = [0, 0 ,0 ,0];
+templateCore2016.Aug = [0, 0 ,0 ,0, 0];
+templateCore2016.Sep = [0, 0 ,0 ,0];
+templateCore2016.Oct = [0, 0 ,0 ,0, 0];
+templateCore2016.Nov = [0, 0 ,0 ,0];
+templateCore2016.Dec = [0, 0 ,0 ,0];
+
+let templateAvailable2017: yearAvailable = {} as any;
+templateAvailable2017.Jan = [-1, -1 ,-1 ,-1, -1];
+templateAvailable2017.Feb = [-1, -1 ,-1 ,-1];
+templateAvailable2017.Mar = [-1, -1 ,-1 ,-1];
+templateAvailable2017.Apr = [-1, -1 ,-1 ,-1];
+templateAvailable2017.Mai = [-1, -1 ,-1 ,-1, -1];
+templateAvailable2017.Jun = [-1, -1 ,-1 ,-1];
+templateAvailable2017.Jul = [-1, -1 ,-1 ,-1, -1];
+templateAvailable2017.Aug = [-1, -1 ,-1 ,-1];
+templateAvailable2017.Sep = [-1, -1 ,-1 ,-1];
+templateAvailable2017.Oct = [-1, -1 ,-1 ,-1, -1];
+templateAvailable2017.Nov = [-1, -1 ,-1 ,-1];
+templateAvailable2017.Dec = [-1, -1 ,-1 ,-1];
+
+let templateAvailable2016: yearAvailable = {} as any;
+templateAvailable2016.Jan = [-1, -1 ,-1 ,-1];
+templateAvailable2016.Feb = [-1, -1 ,-1 ,-1, -1];
+templateAvailable2016.Mar = [-1, -1 ,-1 ,-1];
+templateAvailable2016.Apr = [-1, -1 ,-1 ,-1];
+templateAvailable2016.Mai = [-1, -1 ,-1 ,-1, -1];
+templateAvailable2016.Jun = [-1, -1 ,-1 ,-1];
+templateAvailable2016.Jul = [-1, -1 ,-1 ,-1];
+templateAvailable2016.Aug = [-1, -1 ,-1 ,-1, -1];
+templateAvailable2016.Sep = [-1, -1 ,-1 ,-1];
+templateAvailable2016.Oct = [-1, -1 ,-1 ,-1, -1];
+templateAvailable2016.Nov = [-1, -1 ,-1 ,-1];
+templateAvailable2016.Dec = [-1, -1 ,-1 ,-1];
+
+
+//Templets end
+
+
 
 //Database and objectstores
 let workersDB;
@@ -114,11 +175,13 @@ request.onupgradeneeded = e => {
     }
 
     if (!workersDB.objectStoreNames.contains("year2017Store")){
-        const yearStore07 = workersDB.createObjectStore("year2017Store" , {keyPath :"WorkerId"});     
+        const yearStore07 = workersDB.createObjectStore("year2017Store" , {keyPath :"WorkerId"}); 
+        yearStore07.createIndex("Name","Name", {unique : false});    
     }
 
     if (!workersDB.objectStoreNames.contains("year2016Store")){
         const yearStore06 = workersDB.createObjectStore("year2016Store" , {keyPath :"WorkerId"});
+        yearStore06.createIndex("Name","Name", {unique : false});  
     }
     
     alert(`upgrade is called database name: ${workersDB.name} version : ${workersDB.version}`);

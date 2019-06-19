@@ -1,5 +1,6 @@
 /// <reference path="database.ts" />
 /// <reference path="filter.ts" />
+/// <reference path="inputform.ts" />
 
 
 const months: string[]=["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug","Sep","Oct","Nov","Dec"];
@@ -8,7 +9,7 @@ let team:string;
 let year: string;
 
 let tableLength: number= 0;
-let tableDoneCheck : number =1;
+let tableDoneCheck : number =0;
 
 let popupPostionLeft = 30;
 let popupPostionTop = 10;
@@ -17,10 +18,10 @@ let popupPostionTop = 10;
 function CreatCheckList(){
 
 
-    expendCheck();      //fucntion for expanding and closing dropdown
-    let teamNum = 1;
+   
     const divCheck = document.getElementById("checkTeam") as HTMLDivElement;
     const request = readAllDB("teamStore"); //reading the object store with basic information
+    let  divHeight:number = 20;
 
 
     request.onsuccess = e => {
@@ -28,32 +29,35 @@ function CreatCheckList(){
         const cursor = request.result;
         //Going throught all the teams in the object store to make the dropdown list
         for ( let i = 0; i<cursor.length; i++){
-            let checkElement = document.getElementById("team" + teamNum);       //checking if a dropdown list exist
+            let checkElement = document.getElementById("team" + cursor[i].id);       //checking if a dropdown list exist
             if (checkElement == null){
-            //Creating the text inside the checkox list in label
-            let teamLabel = document.createElement("label");
-            teamLabel.setAttribute("for","team" + teamNum);
-            teamLabel.setAttribute("id","label" + teamNum);
-            teamLabel.setAttribute("class","nohide");
-            teamLabel.innerHTML=cursor[i].teamName;
-            
-            //Creating the checkbox fields
-            let createCheck= document.createElement("input");
-            createCheck.setAttribute("type","checkbox");
-            createCheck.setAttribute("id","team" + teamNum);
-            createCheck.setAttribute("value",cursor[i].teamName);
-            createCheck.setAttribute("class","checkBox");
-            
-            //Spacing
-            let nextLine = document.createElement("BR");
-            nextLine.setAttribute("clear", "both");
-            
-            divCheck.appendChild(teamLabel);
-            teamLabel.appendChild(createCheck);
-            teamLabel.appendChild(nextLine);
+                //Creating the text inside the checkox list in label
+                let teamLabel = document.createElement("label");
+                teamLabel.setAttribute("for","team" + cursor[i].id);
+                teamLabel.setAttribute("id","label" + cursor[i].id);
+                teamLabel.setAttribute("class","nohide");
+                teamLabel.innerHTML=cursor[i].teamName;
+                
+                //Creating the checkbox fields
+                let createCheck= document.createElement("input");
+                createCheck.setAttribute("type","checkbox");
+                createCheck.setAttribute("id","team" + cursor[i].id);
+                createCheck.setAttribute("value",cursor[i].teamName);
+                createCheck.setAttribute("class","checkBox");
+                
+                //Spacing
+                let nextLine = document.createElement("BR");
+                nextLine.setAttribute("clear", "both");
+                
+                divCheck.appendChild(teamLabel);
+                teamLabel.appendChild(createCheck);
+                teamLabel.appendChild(nextLine);
             }
-            teamNum++;
         }
+    divHeight = divHeight*cursor.length;
+    divCheck.style.height = divHeight +"px";
+
+    expendCheck();      //fucntion for expanding and closing dropdown
     }
 
 }
@@ -63,7 +67,7 @@ function CreatCheckList(){
 function checkedTeam(){
 
     let j = 0;
-    let filterTeam: string;
+    let filterTeam: number;
     let request = readAllDB("teamStore");
 
     request.onsuccess = e => {
@@ -77,10 +81,14 @@ function checkedTeam(){
                 let checked = checkedInput.checked;
 
                 if (checked == true){
-                    filterTeam = teamChck[i].teamName;
-                    team = filterTeam;
+                    filterTeam = k;
                     j++
                 }
+            }
+        }
+        for ( let i = 0; i<teamChck.length; i++){
+            if(teamChck[i].id == filterTeam){
+                team = teamChck[i].teamName;
             }
         }
         //Checking if only one team is checked
@@ -130,7 +138,7 @@ function createTable(){
     if (tableParent != undefined){
         teamName.removeChild(tableParent);
         tableLength = 0;
-        tableDoneCheck = 1;
+        tableDoneCheck = 0;
     }
     let table = document.createElement("div") as HTMLDivElement;
     table.setAttribute("id", "tableParent");
@@ -195,7 +203,14 @@ function fillTable(key : number){
 
     request.onsuccess = e =>{
         const workerObsj = request.result;
-        calculateMonth(workerObsj);
+        let workerObjsTeam: coreData[] = [];
+
+        for (let i = 0; i < workerObsj.length; i++){
+            if(workerObsj[i].Team==team){
+                workerObjsTeam.push(workerObsj[i]);
+            }
+        }
+        calculateMonth(workerObjsTeam);
 
     }
 }
@@ -439,15 +454,17 @@ function fillPopUpTable(month:string,key:number, workerAvailable :yearAvailable 
         let sum: number[] = [0,0,0,0,0];
         //Going throught the array of projects
         for(let i = 0; i < worker.length; i++){
-            const workMonth = findMonth(month,worker[i]);
-            let newTr = document.createElement("tr") as HTMLTableRowElement;
-            let row = '<td id = "'+team+year+'Project'+i+'_worker'+key+'_'+month+'" contenteditable = "true">'+worker[i].Project+'</td>';
-            for (let j = 0; j < workMonth.length; j++){ ///Going through all the weeks in the month 
-                row += '<td id= "'+team+year+'Week'+j+'_worker'+key+'_'+month+'_project'+i+'" contenteditable = "true">'+workMonth[j].toFixed(1)+'</td>';
-                sum[j] += workMonth[j];
+            if (worker[i].Team == team){
+                const workMonth = findMonth(month,worker[i]);
+                let newTr = document.createElement("tr") as HTMLTableRowElement;
+                let row = '<td id = "'+team+year+'Project'+i+'_worker'+key+'_'+month+'" contenteditable = "true">'+worker[i].Project+'</td>';
+                for (let j = 0; j < workMonth.length; j++){ ///Going through all the weeks in the month 
+                    row += '<td id= "'+team+year+'Week'+j+'_worker'+key+'_'+month+'_project'+i+'" contenteditable = "true">'+workMonth[j].toFixed(1)+'</td>';
+                    sum[j] += workMonth[j];
+                }
+                newTr.innerHTML = row;
+                parentNode.appendChild(newTr);
             }
-            newTr.innerHTML = row;
-            parentNode.appendChild(newTr);
         } 
         //Calculating the utulization row
         let newFoot = document.createElement("tfoot") ;

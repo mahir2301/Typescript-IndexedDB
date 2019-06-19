@@ -244,7 +244,7 @@ function dragDiv(header, div) {
         document.onmousemove = null;
     }
 }
-//Includes mehtod 
+//Includes function 
 function include(inputArray, checkString) {
     var isInlcuded = false;
     for (var i = 0; i < inputArray.length; i++) {
@@ -253,4 +253,10 @@ function include(inputArray, checkString) {
         }
     }
     return isInlcuded;
+}
+//Fucntion for closing the form
+function closeForm() {
+    var parentNode = document.getElementById("nameNode");
+    var div = document.getElementById("inputFormDiv");
+    parentNode.removeChild(div);
 }

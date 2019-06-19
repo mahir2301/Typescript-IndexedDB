@@ -57,12 +57,13 @@
     display: none;
     background-color: rgb(228, 222, 225);
     position: fixed;
+    z-index: 1;
     left: 20.5%;
     right: 0;
     top: 91px;
     bottom: 0;  
     width:147px;
-    height:50px;
+    /*height:50px;*/
     border: 1px #dadada solid;
     border-radius: 2px;
 }
@@ -249,3 +250,68 @@
     width: 100%;
     color: rgb(197, 197, 197);
 }
+
+.showForm {
+position: relative;
+bottom: 39px;
+left: 80%;
+border-radius: 2px;
+border: none;
+height: 20px;
+width: 55px;
+background-color:rgb(197, 197, 197);
+}
+
+.showForm:hover{
+        background-color: #979797;
+}
+
+.popUpForm {
+    position: fixed;
+    left: 40%;
+    top: 10%;
+    z-index: 1;
+    padding-top: 100px;
+    overflow: auto;
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    min-width: 10%;
+    min-height: 55%;
+    border-radius: 4px;
+}
+
+.formHeader{
+    position: relative;
+    bottom: 30px;
+    cursor: move;
+}
+
+.formSelect{
+    width: 174px;
+    height: 22px;
+}
+
+.formSelect select{
+    width: 100%;
+    height: 100%;
+}
+
+.btnForm{
+    border-radius: 2px;
+    border: none;
+    height: 20px;
+    width: 55px;
+    background-color:rgb(197, 197, 197);
+}
+
+.inputField{
+    border : 2px;
+    border-style: groove;
+    border-color:#EBE9ED;
+}
+
+.dataAdded{
+    display: block;
+}
+

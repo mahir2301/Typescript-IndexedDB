@@ -1,34 +1,34 @@
 /// <reference path="database.ts" />
 /// <reference path="filter.ts" />
+/// <reference path="inputform.ts" />
 var months = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 var team;
 var year;
 var tableLength = 0;
-var tableDoneCheck = 1;
+var tableDoneCheck = 0;
 var popupPostionLeft = 30;
 var popupPostionTop = 10;
 //Function for getting the objectstore with the basic information and building the dropdown option for team
 function CreatCheckList() {
-    expendCheck(); //fucntion for expanding and closing dropdown
-    var teamNum = 1;
     var divCheck = document.getElementById("checkTeam");
     var request = readAllDB("teamStore"); //reading the object store with basic information
+    var divHeight = 20;
     request.onsuccess = function (e) {
         var cursor = request.result;
         //Going throught all the teams in the object store to make the dropdown list
         for (var i = 0; i < cursor.length; i++) {
-            var checkElement = document.getElementById("team" + teamNum); //checking if a dropdown list exist
+            var checkElement = document.getElementById("team" + cursor[i].id); //checking if a dropdown list exist
             if (checkElement == null) {
                 //Creating the text inside the checkox list in label
                 var teamLabel = document.createElement("label");
-                teamLabel.setAttribute("for", "team" + teamNum);
-                teamLabel.setAttribute("id", "label" + teamNum);
+                teamLabel.setAttribute("for", "team" + cursor[i].id);
+                teamLabel.setAttribute("id", "label" + cursor[i].id);
                 teamLabel.setAttribute("class", "nohide");
                 teamLabel.innerHTML = cursor[i].teamName;
                 //Creating the checkbox fields
                 var createCheck = document.createElement("input");
                 createCheck.setAttribute("type", "checkbox");
-                createCheck.setAttribute("id", "team" + teamNum);
+                createCheck.setAttribute("id", "team" + cursor[i].id);
                 createCheck.setAttribute("value", cursor[i].teamName);
                 createCheck.setAttribute("class", "checkBox");
                 //Spacing
@@ -38,8 +38,10 @@ function CreatCheckList() {
                 teamLabel.appendChild(createCheck);
                 teamLabel.appendChild(nextLine);
             }
-            teamNum++;
         }
+        divHeight = divHeight * cursor.length;
+        divCheck.style.height = divHeight + "px";
+        expendCheck(); //fucntion for expanding and closing dropdown
     };
 }
 //Finding out which team was checked when the button "Show" is clicked
@@ -56,10 +58,14 @@ function checkedTeam() {
             if (checkedInput != null) {
                 var checked = checkedInput.checked;
                 if (checked == true) {
-                    filterTeam = teamChck[i].teamName;
-                    team = filterTeam;
+                    filterTeam = k;
                     j++;
                 }
+            }
+        }
+        for (var i = 0; i < teamChck.length; i++) {
+            if (teamChck[i].id == filterTeam) {
+                team = teamChck[i].teamName;
             }
         }
         //Checking if only one team is checked
@@ -103,7 +109,7 @@ function createTable() {
     if (tableParent != undefined) {
         teamName.removeChild(tableParent);
         tableLength = 0;
-        tableDoneCheck = 1;
+        tableDoneCheck = 0;
     }
     var table = document.createElement("div");
     table.setAttribute("id", "tableParent");
@@ -159,7 +165,13 @@ function fillTable(key) {
     var request = readIndex("coreStore" + year, "WorkerId", key);
     request.onsuccess = function (e) {
         var workerObsj = request.result;
-        calculateMonth(workerObsj);
+        var workerObjsTeam = [];
+        for (var i = 0; i < workerObsj.length; i++) {
+            if (workerObsj[i].Team == team) {
+                workerObjsTeam.push(workerObsj[i]);
+            }
+        }
+        calculateMonth(workerObjsTeam);
     };
 }
 //Function for calculating the fileds inside the table
@@ -383,15 +395,17 @@ function fillPopUpTable(month, key, workerAvailable) {
         var sum = [0, 0, 0, 0, 0];
         //Going throught the array of projects
         for (var i = 0; i < worker.length; i++) {
-            var workMonth = findMonth(month, worker[i]);
-            var newTr = document.createElement("tr");
-            var row = '<td id = "' + team + year + 'Project' + i + '_worker' + key + '_' + month + '" contenteditable = "true">' + worker[i].Project + '</td>';
-            for (var j = 0; j < workMonth.length; j++) { ///Going through all the weeks in the month 
-                row += '<td id= "' + team + year + 'Week' + j + '_worker' + key + '_' + month + '_project' + i + '" contenteditable = "true">' + workMonth[j].toFixed(1) + '</td>';
-                sum[j] += workMonth[j];
+            if (worker[i].Team == team) {
+                var workMonth = findMonth(month, worker[i]);
+                var newTr = document.createElement("tr");
+                var row = '<td id = "' + team + year + 'Project' + i + '_worker' + key + '_' + month + '" contenteditable = "true">' + worker[i].Project + '</td>';
+                for (var j = 0; j < workMonth.length; j++) { ///Going through all the weeks in the month 
+                    row += '<td id= "' + team + year + 'Week' + j + '_worker' + key + '_' + month + '_project' + i + '" contenteditable = "true">' + workMonth[j].toFixed(1) + '</td>';
+                    sum[j] += workMonth[j];
+                }
+                newTr.innerHTML = row;
+                parentNode.appendChild(newTr);
             }
-            newTr.innerHTML = row;
-            parentNode.appendChild(newTr);
         }
         //Calculating the utulization row
         var newFoot = document.createElement("tfoot");
