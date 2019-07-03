@@ -232,7 +232,7 @@ function createObjs(objsName:string, data :any){
 function readAllDB(objs){
 	const transaction = workersDB.transaction(objs,"readonly");
 	const objsDB = transaction.objectStore(objs);
-	const request = objsDB.getAll();
+    const request = objsDB.getAll();
 
 	request.onerror = e => {
 		alert("Could not get value of objectStore!");
@@ -264,16 +264,6 @@ function readIndex(objs, index, key){
     return request;
 }
 
-//Reading first data decided by the index and key
-function readIndexKey(objs, index, key){
-    const transaction = workersDB.transaction(objs, "readonly");
-    const objsDB = transaction.objectStore(objs);
-
-    const myIndex = objsDB.index(index);
-    const request = myIndex.getKey(key);
-
-    return request;
-}
 //Updating the database with the input object
 function updateData(objs,input){
     const transaction = workersDB.transaction(objs,"readwrite");

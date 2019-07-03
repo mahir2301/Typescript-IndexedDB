@@ -184,14 +184,6 @@ function readIndex(objs, index, key) {
     var request = myIndex.getAll(key);
     return request;
 }
-//Reading first data decided by the index and key
-function readIndexKey(objs, index, key) {
-    var transaction = workersDB.transaction(objs, "readonly");
-    var objsDB = transaction.objectStore(objs);
-    var myIndex = objsDB.index(index);
-    var request = myIndex.getKey(key);
-    return request;
-}
 //Updating the database with the input object
 function updateData(objs, input) {
     var transaction = workersDB.transaction(objs, "readwrite");

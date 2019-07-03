@@ -8,6 +8,7 @@ var tableLength = 0;
 var tableDoneCheck = 0;
 var popupPostionLeft = 30;
 var popupPostionTop = 10;
+var teamupdated = false;
 //Function for getting the objectstore with the basic information and building the dropdown option for team
 function CreatCheckList() {
     var divCheck = document.getElementById("checkTeam");

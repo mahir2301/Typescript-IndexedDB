@@ -3,6 +3,8 @@
 
 //Function for making the popup div for the form
 function makeForm(){
+    expendDiv();
+
     const formDiv = document.createElement("div") as HTMLDivElement;
     const parentNode = document.getElementById("nameNode") as HTMLParagraphElement;
     const checkFormDiv = document.getElementById("inputFormDiv") as HTMLDivElement;     //Checking if div is already made
@@ -42,16 +44,14 @@ function formFields(formDiv){
     
     const innerForm = 'Worker name: <br> <input type="text" id="workerForm" placeholder="Worker Name" class="inputField"> <br>'+
                     'Project: <br> <input type="text" id="projectForm" placeholder="Project" class="inputField"> <br>'+
-                    'Team: <br> <input type="text" id="teamForm"placeholder="Team" class="inputField"><br>'+
+                    'Select Team: <br> <div class="formSelect"><select id="formTeamSelect"> <option disabled selected hidden value="-1">Select team</option></select> </div> '+
                     'Select year: <br> <div class="formSelect"><select id="formYearSelect"> <option id="formYear" value="2017">2017</option> <option id="formYear" value="2016">2016</option> </select> </div> <br>'+
-                    'Worker exists:  <input type="checkbox" id="workerExists" value="true"> <br>'+
-                    '<input type="text" id="workerOldForm" placeholder="Worker Old Name" class="inputField"> <br><br>'+
                     '<button id="formBtn" onclick="addToDatabase()" class="btnForm"> Submit </button><br>'+
                     '<div><p id="infoForm" class="dataAdded" > </p></div>' ; 
     newForm.innerHTML=innerForm;
 
     formDiv.appendChild(newForm);
-
+    selectTeam();
 }
 
 
@@ -81,37 +81,30 @@ function addToDatabase(){
         projectForm.style.borderColor = "#EBE9ED";
     }
   
-    const teamForm = document.getElementById("teamForm") as HTMLInputElement;
-    const newTeam = teamForm.value;
+    const teamSelected = document.getElementById("formTeamSelect") as HTMLSelectElement;
+    const teamChosen = teamSelected.options[teamSelected.selectedIndex].value;
 
-    if (!newTeam){
-        teamForm.style.borderColor = "red";
-        teamForm.placeholder = "Name required"
+    if (teamChosen == "-1"){
+        const infoForm = document.getElementById("infoForm") as HTMLParagraphElement;
+        infoForm.style.color = "red";
+        infoForm.innerHTML = "Please slect team";
+        return;
     }else{
-        teamForm.style.borderColor = "#EBE9ED";
+        const infoForm = document.getElementById("infoForm") as HTMLParagraphElement;
+        infoForm.style.color = "black";
+        infoForm.innerHTML = " ";
     }
   
 
     const yearSelected = document.getElementById("formYearSelect") as HTMLSelectElement;
     const yearChosen = yearSelected.options[yearSelected.selectedIndex].value;
 
-    
-    const checkExists = document.getElementById("workerExists") as HTMLInputElement;
-    const checkedValue = checkExists.checked;
 
-    if (checkedValue == true){      //If worker exists is checked then we don't need to add new data in the object store for year available
-        const oldWorkerForm = document.getElementById("workerOldForm") as HTMLInputElement;
-        const oldWorker = oldWorkerForm.value;
-        //This was added so if the worker changes last name or we just want to add a new project for an existing worker
-        updateWorker(newWorker, newProject, newTeam, yearChosen,oldWorker); 
-
-    }else{
-        //If worker doesn't exists in the DB then we add new entry
-        addWorker(newWorker, newProject, newTeam, yearChosen);
-    }
-
+    addWorker(newWorker, newProject, teamChosen, yearChosen);
 }
 
+
+/*
 function updateWorker(name:string, project:string, newTeam:string, yearChosen:string, oldName:string){
     let request;
     if (oldName){       //Checking if worker name was changed
@@ -151,45 +144,16 @@ function updateWorker(name:string, project:string, newTeam:string, yearChosen:st
                 newData.Team = newTeam;
 
                 updateData("coreStore"+yearChosen,newData);
-                
-                updateTeam(newTeam);
+      
 
             }
         } 
 }
+*/
 
-//Updating team objectstore
-function updateTeam(newTeam:string){
-    const request = readAllDB ("teamStore");
-
-    request.onsuccess = e =>{
-        const teamArray = request.result;
-        let isIncluded:boolean = false;
-        //Checkign if the new team exsists in the objectstore
-        for ( let i=0; i<teamArray.length;i++){
-            if (teamArray[i].teamName == newTeam){
-                isIncluded = true;
-            }
-        }
-        //If new team doesn't exists we add it to the object store
-        if(!isIncluded){
-            let newEntry: teamsInterfacs = {} as any;
-            newEntry.id = teamArray.length + 1;
-            newEntry.teamName = newTeam;
-            updateData("teamStore",newEntry);
-        }
-        //Writing out infomation that the data was added
-        const infoForm = document.getElementById("infoForm") as HTMLParagraphElement;
-        infoForm.innerHTML = "Data has been added";
-        //Disableing the submit button 
-        const subBtn = document.getElementById("formBtn") as HTMLButtonElement;
-        subBtn.setAttribute("disabled","true");
-    }
-
-}
 
 //Function adding new data
-function addWorker(name:string, project:string, newTeam:string, yearChosen:string){
+function addWorker(name:string, project:string, teamChosen:string, yearChosen:string){
     const request = readAllDB("year"+yearChosen+"Store");
 
     request.onsuccess = e => {
@@ -204,12 +168,12 @@ function addWorker(name:string, project:string, newTeam:string, yearChosen:strin
         newData.WorkerId = availableArray.length + 1;
         newData.Name = name;
         updateData("year"+yearChosen+"Store",newData);
-        addCoreData(newData.WorkerId, project, newTeam, yearChosen)
+        addCoreData(newData.WorkerId, project, teamChosen, yearChosen)
     }
 }
 
 //Adding data to core objectstore
-function addCoreData(newWorkerId:number, project:string, newTeam:string, yearChosen:string){
+function addCoreData(newWorkerId:number, project:string, teamChosen:string, yearChosen:string){
     const request = readAllDB("coreStore"+yearChosen)
     request.onsuccess = e =>{
         const lenghtObjs = request.result.length;
@@ -225,13 +189,123 @@ function addCoreData(newWorkerId:number, project:string, newTeam:string, yearCho
         newData.Project = project;
         newData.Id = lenghtObjs + 1;
         newData.WorkerId = newWorkerId;
-        newData.Team = newTeam;
+        newData.Team = teamChosen;
 
         updateData("coreStore"+yearChosen,newData);
-                    
-        updateTeam(newTeam);
 
+                  
+        //Writing out infomation that the data was added
+        const infoForm = document.getElementById("infoForm") as HTMLParagraphElement;
+        infoForm.innerHTML = "Data has been added";
+        //Disableing the submit button 
+        const subBtn = document.getElementById("formBtn") as HTMLButtonElement;
+        subBtn.setAttribute("disabled","true");
+                  
     }
+}
+
+
+
+
+
+function teamForm(){
+    expendDiv();
+
+    const formTeamDiv = document.createElement("div") as HTMLDivElement;
+    const parentNode = document.getElementById("nameNode") as HTMLParagraphElement;
+    const checkFormTeamDiv = document.getElementById("inputTeamDiv") as HTMLDivElement;     //Checking if div is already made
+    if (checkFormTeamDiv == null){
+        formTeamDiv.setAttribute("id","inputTeamDiv");
+        formTeamDiv.setAttribute("class","popUpForm");
+        parentNode.appendChild(formTeamDiv);
+
+        const close = document.createElement("span")  as HTMLSpanElement;
+        close.setAttribute("class","close");
+        close.setAttribute("id","closeTeamForm");
+        close.innerHTML = "&times;";
+        
+        close.addEventListener("click",function(){ closeTeamForm()});
+        formTeamDiv.appendChild(close);
+
+        const headerForm = document.createElement("h3") as HTMLHeadElement;
+        headerForm.setAttribute("class","formHeader");
+
+        dragDiv(headerForm,formTeamDiv);        //Making the div dragable
+
+        headerForm.innerHTML="New Team";
+
+        formTeamDiv.appendChild(headerForm);
+        const hrelement = document.createElement("hr") as HTMLHRElement;
+        hrelement.setAttribute("class","popuphrstyle");  
+        formTeamDiv.appendChild(hrelement);
+
+        fillTeamForm(formTeamDiv)
+    }
+}
+
+function fillTeamForm(formTeamDiv){
+    const newForm = document.createElement("div") as HTMLDivElement;
+    newForm.setAttribute("class","formDiv");
+
+    const innerForm = 'Team name: <br> <input type="text" id="newTeamForm" placeholder="Team Name" class="inputField"> <br><br>'+
+                    '<button id="formTeamBtn" onclick="addTeamToDatabase()" class="btnForm"> Submit </button><br>'+
+                    '<div><p id="infoTeamForm" class="dataAdded" > </p></div>' ; 
+    newForm.innerHTML=innerForm;
+
+    formTeamDiv.appendChild(newForm);
+    selectTeam();
+}
+
+
+function addTeamToDatabase(){
+
+    const teamField = document.getElementById("newTeamForm") as HTMLInputElement;
+    const newTeam = teamField.value;
+    
+    if (!newTeam){
+        teamField.style.borderColor = "red";
+        teamField.placeholder = "Name required"
+        return;
+    }else{
+        teamField.style.borderColor = "#EBE9ED";
+    }
+  
+    updateTeam(newTeam);
+}
+
+
+//Updating team objectstore
+function updateTeam(newTeam:string){
+    const request = readAllDB ("teamStore");
+
+    request.onsuccess = e =>{
+        const teamArray = request.result;
+        let isIncluded:boolean = false;
+        //Checkign if the new team exsists in the objectstore
+        for ( let i=0; i<teamArray.length;i++){
+            if (teamArray[i].teamName == newTeam){
+                isIncluded = true;
+            }
+        }
+        
+        //Writing out infomation that the data was added
+        const infoForm = document.getElementById("infoTeamForm") as HTMLParagraphElement;
+        //If new team doesn't exists we add it to the object store
+        if(!isIncluded){
+            let newEntry: teamsInterfacs = {} as any;
+            newEntry.id = teamArray.length + 1;
+            newEntry.teamName = newTeam;
+            updateData("teamStore",newEntry);
+            //Writing out infomation that the data was added
+            infoForm.innerHTML = "Data has been added";
+            //Disableing the submit button 
+            const subBtn = document.getElementById("formTeamBtn") as HTMLButtonElement;
+            subBtn.setAttribute("disabled","true");
+        }else{
+            infoForm.innerHTML = "Team already exists in the database";
+        }
+    }
+
 }
 
 

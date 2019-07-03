@@ -15,6 +15,13 @@
 <body onload="creatDB()">
 
      <h3><b> Raports|Team(s)</b></h3>
+     
+     <button onclick="expendDiv()" class="showForm" id="dropdownBtn">New</button>
+     <div class= "dropdownDiv" id = "dorpdownDiv">
+         <a onclick="makeForm()">Entry</a>
+         <a onclick="teamForm()">Team</a>
+     </div>
+     </div>
      <hr class="hrstyle">
      
     <div class="filterFrame">
@@ -39,7 +46,7 @@
             
             <button onclick="checkedTeam()" class="showBtn">Show</button>
 
-            <button onclick="makeForm()" class="showForm">New</button>
+            
         </div>
     </div>
 

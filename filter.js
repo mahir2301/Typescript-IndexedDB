@@ -259,4 +259,40 @@ function closeForm() {
     var parentNode = document.getElementById("nameNode");
     var div = document.getElementById("inputFormDiv");
     parentNode.removeChild(div);
+    teamupdated = false;
+}
+//Function for select team in input form
+function selectTeam() {
+    if (!teamupdated) {
+        var nodeParent_1 = document.getElementById("formTeamSelect");
+        var request_1 = readAllDB("teamStore");
+        request_1.onsuccess = function (e) {
+            var cursor = request_1.result;
+            for (var i = 0; i < cursor.length; i++) {
+                var newOption = document.createElement("Option");
+                newOption.setAttribute("id", "team" + i + 1);
+                newOption.setAttribute("value", cursor[i].teamName);
+                newOption.innerHTML = cursor[i].teamName;
+                nodeParent_1.appendChild(newOption);
+            }
+            teamupdated = true;
+        };
+    }
+}
+function expendDiv() {
+    var dropdownDiv = document.getElementById("dorpdownDiv");
+    var dropdownBtn = document.getElementById("dropdownBtn");
+    if (dropdownDiv.style.display == "block") {
+        dropdownDiv.style.display = "none";
+        dropdownBtn.style.background = "rgb(197, 197, 197)";
+    }
+    else {
+        dropdownDiv.style.display = "block";
+        dropdownBtn.style.background = "#979797";
+    }
+}
+function closeTeamForm() {
+    var parentNode = document.getElementById("nameNode");
+    var div = document.getElementById("inputTeamDiv");
+    parentNode.removeChild(div);
 }

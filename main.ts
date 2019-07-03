@@ -14,6 +14,8 @@ let tableDoneCheck : number =0;
 let popupPostionLeft = 30;
 let popupPostionTop = 10;
 
+let teamupdated = false;
+
 //Function for getting the objectstore with the basic information and building the dropdown option for team
 function CreatCheckList(){
 

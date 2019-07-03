@@ -280,4 +280,53 @@ function closeForm(){
     const parentNode = document.getElementById("nameNode") as HTMLParagraphElement;
     const div = document.getElementById("inputFormDiv");
     parentNode.removeChild(div);
+    teamupdated = false;
+}
+
+
+
+//Function for select team in input form
+function selectTeam(){
+
+    if (!teamupdated){
+        const nodeParent = document.getElementById("formTeamSelect") as HTMLSelectElement;
+
+        const request = readAllDB("teamStore");
+
+        request.onsuccess = e => {
+            const cursor = request.result;
+
+            for (let i = 0; i < cursor.length; i++){
+                let newOption = document.createElement("Option");
+                newOption.setAttribute("id","team"+i+1);
+                newOption.setAttribute("value",cursor[i].teamName);
+                newOption.innerHTML = cursor[i].teamName;
+
+                nodeParent.appendChild(newOption);
+
+            }
+            teamupdated = true;
+        }
+    }
+        
+}
+
+function expendDiv(){
+    const dropdownDiv = document.getElementById("dorpdownDiv") as HTMLDivElement;
+    const dropdownBtn = document.getElementById("dropdownBtn") as HTMLButtonElement;
+
+    if (dropdownDiv.style.display == "block"){
+        dropdownDiv.style.display = "none";
+        dropdownBtn.style.background ="rgb(197, 197, 197)";
+    }else{
+        dropdownDiv.style.display = "block";
+        dropdownBtn.style.background ="#979797";
+    }
+}
+
+
+function closeTeamForm(){
+    const parentNode = document.getElementById("nameNode") as HTMLParagraphElement;
+    const div = document.getElementById("inputTeamDiv");
+    parentNode.removeChild(div);
 }
