@@ -1,4 +1,6 @@
 
+//Function for select team in input form
+
 //Functions for adding new data
 
 //Function for making the popup div for the form
@@ -44,7 +46,7 @@ function formFields(formDiv){
     
     const innerForm = 'Worker name: <br> <input type="text" id="workerForm" placeholder="Worker Name" class="inputField"> <br>'+
                     'Project: <br> <input type="text" id="projectForm" placeholder="Project" class="inputField"> <br>'+
-                    'Select Team: <br> <div class="formSelect"><select id="formTeamSelect"> <option disabled selected hidden value="-1">Select team</option></select> </div> '+
+                    'Select team: <br> <div class="formSelect"><select id="formTeamSelect"> <option disabled selected hidden value="-1">Select team</option></select> </div> '+
                     'Select year: <br> <div class="formSelect"><select id="formYearSelect"> <option id="formYear" value="2017">2017</option> <option id="formYear" value="2016">2016</option> </select> </div> <br>'+
                     '<button id="formBtn" onclick="addToDatabase()" class="btnForm"> Submit </button><br>'+
                     '<div><p id="infoForm" class="dataAdded" > </p></div>' ; 
@@ -167,13 +169,19 @@ function addWorker(name:string, project:string, teamChosen:string, yearChosen:st
         }
         newData.WorkerId = availableArray.length + 1;
         newData.Name = name;
+        newData.Team = teamChosen;
         updateData("year"+yearChosen+"Store",newData);
-        addCoreData(newData.WorkerId, project, teamChosen, yearChosen)
+
+        //Writing out infomation that the data was added
+        const infoForm = document.getElementById("infoForm") as HTMLParagraphElement;
+        //Disableing the submit button 
+        const subBtn = document.getElementById("formBtn") as HTMLButtonElement;
+        addCoreData(newData.WorkerId, project, teamChosen, yearChosen, infoForm, subBtn)
     }
 }
 
 //Adding data to core objectstore
-function addCoreData(newWorkerId:number, project:string, teamChosen:string, yearChosen:string){
+function addCoreData(newWorkerId:number, project:string, teamChosen:string, yearChosen:string, infoForm, subBtn){
     const request = readAllDB("coreStore"+yearChosen)
     request.onsuccess = e =>{
         const lenghtObjs = request.result.length;
@@ -192,22 +200,17 @@ function addCoreData(newWorkerId:number, project:string, teamChosen:string, year
         newData.Team = teamChosen;
 
         updateData("coreStore"+yearChosen,newData);
-
-                  
-        //Writing out infomation that the data was added
-        const infoForm = document.getElementById("infoForm") as HTMLParagraphElement;
+   
         infoForm.innerHTML = "Data has been added";
-        //Disableing the submit button 
-        const subBtn = document.getElementById("formBtn") as HTMLButtonElement;
-        subBtn.setAttribute("disabled","true");
-                  
+              
+        subBtn.setAttribute("disabled","true");                 
     }
 }
 
 
 
 
-
+//Creating form for adding new teams
 function teamForm(){
     expendDiv();
 
@@ -243,6 +246,7 @@ function teamForm(){
     }
 }
 
+//Creating the elements of the form
 function fillTeamForm(formTeamDiv){
     const newForm = document.createElement("div") as HTMLDivElement;
     newForm.setAttribute("class","formDiv");
@@ -253,10 +257,9 @@ function fillTeamForm(formTeamDiv){
     newForm.innerHTML=innerForm;
 
     formTeamDiv.appendChild(newForm);
-    selectTeam();
 }
 
-
+//Adding the new team to the database
 function addTeamToDatabase(){
 
     const teamField = document.getElementById("newTeamForm") as HTMLInputElement;
@@ -306,6 +309,178 @@ function updateTeam(newTeam:string){
         }
     }
 
+}
+
+
+//Function for adding new project
+function makeProject(){
+    expendDiv();
+
+    const formProjectDiv = document.createElement("div") as HTMLDivElement;
+    const parentNode = document.getElementById("nameNode") as HTMLParagraphElement;
+    const checkFormProjectDiv = document.getElementById("inputProjectDiv") as HTMLDivElement;     //Checking if div is already made
+
+    //Making the sekelton of the div and adding the header
+    if (checkFormProjectDiv == null){
+        formProjectDiv.setAttribute("id","inputProjectDiv");
+        formProjectDiv.setAttribute("class","popUpForm");
+        parentNode.appendChild(formProjectDiv);
+
+        const close = document.createElement("span")  as HTMLSpanElement;
+        close.setAttribute("class","close");
+        close.setAttribute("id","closeProjectForm");
+        close.innerHTML = "&times;";
+        
+        close.addEventListener("click",function(){ closeProjectForm()});
+        formProjectDiv.appendChild(close);
+
+        const headerForm = document.createElement("h3") as HTMLHeadElement;
+        headerForm.setAttribute("class","formHeader");
+
+        dragDiv(headerForm,formProjectDiv);        //Making the div dragable
+
+        headerForm.innerHTML="New Project";
+
+        formProjectDiv.appendChild(headerForm);
+        const hrelement = document.createElement("hr") as HTMLHRElement;
+        hrelement.setAttribute("class","popuphrstyle");  
+        formProjectDiv.appendChild(hrelement);
+
+        fillProjectForm(formProjectDiv)
+    }
+
+}
+
+
+//Creating the elements of the project form
+function fillProjectForm(formProjectDiv){
+    const newForm = document.createElement("div") as HTMLDivElement;
+    newForm.setAttribute("class","formDiv");
+
+    const innerForm = 'Select year: <br> <div class="formSelect"><select id="projectYearSelect"> <option id="formYear" value="2017">2017</option> <option id="formYear" value="2016">2016</option> </select> </div> '+
+                    'Select team: <br> <div class="formSelect"><select id="projectTeamSelect"> <option disabled selected hidden value="-1">Select team</option></select> </div> '+
+                    'Select worker: <br> <div class="formSelect"><select id="projectWorkerSelect"  onclick = "selectWorker()"> <option disabled selected hidden value="-1">Select worker</option></select> </div> '+
+                    'Project: <br> <input type="text" id="projectInputForm" placeholder="Project" class="inputField"> <br> <br>'+
+                    '<button id="projectBtn" onclick="addProjectToDatabase()" class="btnForm"> Submit </button><br> '+
+                    '<div><p id="infoProject" class="dataAdded" > </p></div>' ; 
+    newForm.innerHTML=innerForm;
+
+    formProjectDiv.appendChild(newForm);
+    selectProjectTeam();
+}
+
+//Checking if new worker select needs to be made
+let teamChanged : boolean = false;
+
+
+//Creating team select options
+function selectProjectTeam(){
+    const nodeParent = document.getElementById("projectTeamSelect") as HTMLSelectElement;
+
+    const nodeYear = document.getElementById("projectYearSelect") as HTMLSelectElement;
+
+    nodeParent.addEventListener("change", function(){createSelectWorker()});
+    nodeYear.addEventListener("change", function(){createSelectWorker()});
+    const request = readAllDB("teamStore");
+
+    //Creating team select options
+    request.onsuccess = e => {
+        const cursor = request.result;
+
+        for (let i = 0; i < cursor.length; i++){
+            let newOption = document.createElement("Option");
+            newOption.setAttribute("id","teamProject"+i+1);
+            newOption.setAttribute("value",cursor[i].teamName);
+            newOption.innerHTML = cursor[i].teamName;
+            nodeParent.appendChild(newOption);    
+        }
+    }
+    teamChanged = true;        
+}
+
+//Creating worker select options
+function createSelectWorker(){
+    if (teamChanged){
+        //Geting data from year and team select
+        const yearSelected = document.getElementById("projectYearSelect") as HTMLSelectElement;
+        const yearChosen = yearSelected.options[yearSelected.selectedIndex].value;
+        const teamSelected = document.getElementById("projectTeamSelect") as HTMLSelectElement;
+        const teamName = teamSelected.options[teamSelected.selectedIndex].value;
+
+        const workerSelect = document.getElementById("projectWorkerSelect") as HTMLSelectElement;
+
+        //Deliting old options from the worker select
+        for ( let i = 0; i < workerSelect.length; i++){
+            workerSelect.remove(i);   
+        }
+        const firstOption = '<option disabled selected hidden value="-1">Select worker</option>';
+        workerSelect.innerHTML = firstOption;
+        const request = readIndex("year"+yearChosen+"Store","Team",teamName);
+
+        //Creating new options for selected team/year
+        request.onsuccess = e => {
+            const cursor = request.result;
+           
+            for (let i = 0; i < cursor.length; i++){
+                let newOption = document.createElement("Option");
+                newOption.setAttribute("id","workerProject"+i+1);
+                newOption.setAttribute("value",cursor[i].WorkerId);
+                newOption.innerHTML = cursor[i].Name;
+                workerSelect.appendChild(newOption);
+            }
+            
+        }
+    }
+
+}
+
+
+//Adding new data to database
+function addProjectToDatabase(){
+    //getting data from fields 
+    const yearSelect = document.getElementById("projectYearSelect") as HTMLSelectElement;
+    const yearChosen = yearSelect.options[yearSelect.selectedIndex].value;
+    const teamSelect = document.getElementById("projectTeamSelect") as HTMLSelectElement;
+    const teamChosen = teamSelect.options[teamSelect.selectedIndex].value;
+    const workerSelect = document.getElementById("projectWorkerSelect") as HTMLSelectElement;
+    const workerId = workerSelect.options[workerSelect.selectedIndex].value;
+    
+    const projectInput = document.getElementById("projectInputForm") as HTMLInputElement;
+    const newProject = projectInput.value;
+
+    const info = document.getElementById("infoProject") as HTMLParagraphElement;
+    const subBtn = document.getElementById("projectBtn") as HTMLButtonElement;
+
+    //Checking if team is selected
+    if (teamChosen == "-1"){
+        teamSelect.style.borderColor = "red";
+        info.innerHTML = "Select team";
+        return;
+    }else{
+        teamSelect.style.borderColor = "#EBE9ED";
+        info.innerHTML = "";
+    }
+
+    //Checking if worker is selected
+    if (workerId == "-1"){
+        workerSelect.style.borderColor = "red";
+        info.innerHTML = "Select worker";
+        return;
+    }else{
+        workerSelect.style.borderColor = "#EBE9ED";
+        info.innerHTML = "";
+    }
+
+    //Checking if project data was given
+    if (newProject){
+        projectInput.style.borderColor = "#EBE9ED";
+        addCoreData(+workerId, newProject, teamChosen, yearChosen, info, subBtn)
+    }else{
+        projectInput.style.borderColor = "red";
+        projectInput.placeholder = "Project required"
+        return;
+    }
+         
 }
 
 

@@ -61,21 +61,22 @@ interface yearAvailable {
 	Sep : number[];
 	Oct : number[];
 	Nov : number[];
-	Dec : number[];
+    Dec : number[];
+    Team : string;
 }
 
 //Availablity of each worker in 2017
 let yearAvailable2017DB: yearAvailable[] = [
-{ WorkerId :	1	, Name :	"John Smith"		, Jan :	[ -1, -1, 5, 5 ,5]	, Feb :	[ 5, 5, 5, 5 ]	, Mar :	[ 0, 5, 0, 5]	, Apr :	[ 5, 5, 5, 5]	, Mai :	[ 5, 5, 5, 5 ,5]	, Jun :	[ 0, 0, 0, 5]	, Jul :	[ 5, 5, 5, 5 ,5]	, Aug :	[ 5, 5, 5, 5]	, Sep :	[ 0, 0, 0, 0]	, Oct : 	[ 5, 5, 5, 5 ,5]	, Nov :	[ 5, 5, 5, 5]	, Dec :	[ 5, 5, 5, 5]	},
-{ WorkerId :	2	, Name :	"Robert Joel"		, Jan :	[ 5, 5, 5, 5 ,5]	, Feb :	[ 5, 5, 5, 5 ]	, Mar :	[ 5, 5, 5, 5]	, Apr :	[ 5, 5, 5, 5]	, Mai :	[ 5, 5, 5, 5 ,5]	, Jun :	[ 5, 5, 5, 5]	, Jul :	[ 5, 5, 5, 5 ,5]	, Aug :	[ 5, 5, 5, 5]	, Sep :	[ 5, 5, 5, 5]	, Oct : 	[ 5, 5, 5, 5 ,5]	, Nov :	[ 5, 5, 5, 5]	, Dec :	[ 5, 5, 5, 5]	},
-{ WorkerId :	3	, Name :	"Johannes Schmith"	, Jan :	[ -1, -1, -1, -1 ,-1]	, Feb :	[ -1, -1, -1, -1 ]	, Mar :	[ -1, -1, -1, -1 ]	, Apr :	[ 0, 0, 0, 0]	, Mai :	[ 5, 5, 5, 5 ,5]	, Jun :	[ 0, 0, 5, 5]	, Jul :	[ 5, 5, 5, 5 ,5]	, Aug :	[ 5, 5, 5, 5]	, Sep :	[ 5, 5, 5, 5]	, Oct :		[ 5, 5, 5, 5 ,5]	, Nov :	[ 5, 5, 5, 5]	, Dec :	[ 5, 5, 5, 5]	},	
-{ WorkerId :	4	, Name :	"Johnny Kurl"		, Jan :	[ 5, 5, 5, 5 ,5]	, Feb :	[ 5, 5, 5, 5 ]	, Mar :	[ 5, 5, 5, 5]	, Apr :	[ 5, 5, 5, 5]	, Mai :	[ 5, 5, 5, 5 ,5]	, Jun :	[ 0, 0, 0, 5]	, Jul :	[ 5, 5, 5, 5 ,5]	, Aug :	[ 5, 5, 5, 5]	, Sep :	[ 5, 5, 5, 5]	, Oct : 	[ 5, 5, 5, 5 ,5]	, Nov :	[ 5, 5, 5, 5]	, Dec :	[ 5, 5, 5, 5]	},
+{ WorkerId :	1	, Name :	"John Smith"		, Jan :	[ -1, -1, 5, 5 ,5]	, Feb :	[ 5, 5, 5, 5 ]	, Mar :	[ 0, 5, 0, 5]	, Apr :	[ 5, 5, 5, 5]	, Mai :	[ 5, 5, 5, 5 ,5]	, Jun :	[ 0, 0, 0, 5]	, Jul :	[ 5, 5, 5, 5 ,5]	, Aug :	[ 5, 5, 5, 5]	, Sep :	[ 0, 0, 0, 0]	, Oct : 	[ 5, 5, 5, 5 ,5]	, Nov :	[ 5, 5, 5, 5]	, Dec :	[ 5, 5, 5, 5], Team : "Web"	},
+{ WorkerId :	2	, Name :	"Robert Joel"		, Jan :	[ 5, 5, 5, 5 ,5]	, Feb :	[ 5, 5, 5, 5 ]	, Mar :	[ 5, 5, 5, 5]	, Apr :	[ 5, 5, 5, 5]	, Mai :	[ 5, 5, 5, 5 ,5]	, Jun :	[ 5, 5, 5, 5]	, Jul :	[ 5, 5, 5, 5 ,5]	, Aug :	[ 5, 5, 5, 5]	, Sep :	[ 5, 5, 5, 5]	, Oct : 	[ 5, 5, 5, 5 ,5]	, Nov :	[ 5, 5, 5, 5]	, Dec :	[ 5, 5, 5, 5], Team : "Web"	},
+{ WorkerId :	3	, Name :	"Johannes Schmith"	, Jan :	[ -1, -1, -1, -1 ,-1]	, Feb :	[ -1, -1, -1, -1 ]	, Mar :	[ -1, -1, -1, -1 ]	, Apr :	[ 0, 0, 0, 0]	, Mai :	[ 5, 5, 5, 5 ,5]	, Jun :	[ 0, 0, 5, 5]	, Jul :	[ 5, 5, 5, 5 ,5]	, Aug :	[ 5, 5, 5, 5]	, Sep :	[ 5, 5, 5, 5]	, Oct :		[ 5, 5, 5, 5 ,5]	, Nov :	[ 5, 5, 5, 5]	, Dec :	[ 5, 5, 5, 5], Team : "Backend"	},	
+{ WorkerId :	4	, Name :	"Johnny Kurl"		, Jan :	[ 5, 5, 5, 5 ,5]	, Feb :	[ 5, 5, 5, 5 ]	, Mar :	[ 5, 5, 5, 5]	, Apr :	[ 5, 5, 5, 5]	, Mai :	[ 5, 5, 5, 5 ,5]	, Jun :	[ 0, 0, 0, 5]	, Jul :	[ 5, 5, 5, 5 ,5]	, Aug :	[ 5, 5, 5, 5]	, Sep :	[ 5, 5, 5, 5]	, Oct : 	[ 5, 5, 5, 5 ,5]	, Nov :	[ 5, 5, 5, 5]	, Dec :	[ 5, 5, 5, 5], Team : "Backend"	},
 ];
 //Availablity of each worker in 2016
 let yearAvailable2016DB :yearAvailable[] = [
-{ WorkerId :	1	, Name :	"John Smith"	, Jan :	[ 5, 5, 5, 5]	, Feb :	[ 5, 5, 5, 5 ,5]	, Mar :	[ 5, 5, 5, 5]	, Apr :	[ 0, 0, 0, 0]	, Mai :	[ 5, 5, 5, 5 ,5]	, Jun :	[ 5, 5, 5, 5]	, Jul :	[ 5, 5, 5, 5]	, Aug :	[ 5, 5, 5, 5 ,5]	, Sep :	[ 5, 5, 5, 5]	, Oct : 	[ 5, 5, 5, 5 ,5]	, Nov :	[ 5, 5, 5, 5]	, Dec :	[ 5, 5, 5, 5]	},
-{ WorkerId :	2	, Name :	"Robert Joel"	, Jan :	[ 5, 5, 5, 5]	, Feb :	[ 5, 5, 5, 5 ,5]	, Mar :	[ 5, 5, 5, 5]	, Apr :	[ 5, 5, 5, 5]	, Mai :	[ 5, 5, 5, 5 ,5]	, Jun :	[ 5, 5, 5, 5]	, Jul :	[ 5, 5, 5, 5]	, Aug :	[ 5, 5, 5, 5 ,5]	, Sep :	[ 5, 5, 5, 5]	, Oct : 	[ 5, 5, 5, 5 ,5]	, Nov :	[ 5, 5, 5, 5]	, Dec :	[ 5, 5, 5, 5]	},
-{ WorkerId :	3	, Name :	"Anross Rossi"	, Jan :	[ 5, 5, 5, 5]	, Feb :	[ 5, 5, 4, 5, 5]	, Mar :	[ 5, 5, 5, 5]	, Apr :	[ 5, 5, 5, 5]	, Mai :	[ 5, 5, 5, 5 ,5]	, Jun :	[ 5, 5, 5, 5]	, Jul :	[ 5, 5, 5, 5]	, Aug :	[0, 0, 0, 0,0]		, Sep :	[ 5, 5, 5, 5]	, Oct : 	[ 5, 5, 5, 5 ,5]	, Nov :	[ 5, 5, 5, 5]	, Dec :	[ -1, -1, -1, -1 ]	},
+{ WorkerId :	1	, Name :	"John Smith"	, Jan :	[ 5, 5, 5, 5]	, Feb :	[ 5, 5, 5, 5 ,5]	, Mar :	[ 5, 5, 5, 5]	, Apr :	[ 0, 0, 0, 0]	, Mai :	[ 5, 5, 5, 5 ,5]	, Jun :	[ 5, 5, 5, 5]	, Jul :	[ 5, 5, 5, 5]	, Aug :	[ 5, 5, 5, 5 ,5]	, Sep :	[ 5, 5, 5, 5]	, Oct : 	[ 5, 5, 5, 5 ,5]	, Nov :	[ 5, 5, 5, 5]	, Dec :	[ 5, 5, 5, 5], Team : "Web"	},
+{ WorkerId :	2	, Name :	"Robert Joel"	, Jan :	[ 5, 5, 5, 5]	, Feb :	[ 5, 5, 5, 5 ,5]	, Mar :	[ 5, 5, 5, 5]	, Apr :	[ 5, 5, 5, 5]	, Mai :	[ 5, 5, 5, 5 ,5]	, Jun :	[ 5, 5, 5, 5]	, Jul :	[ 5, 5, 5, 5]	, Aug :	[ 5, 5, 5, 5 ,5]	, Sep :	[ 5, 5, 5, 5]	, Oct : 	[ 5, 5, 5, 5 ,5]	, Nov :	[ 5, 5, 5, 5]	, Dec :	[ 5, 5, 5, 5], Team : "Web"	},
+{ WorkerId :	3	, Name :	"Anross Rossi"	, Jan :	[ 5, 5, 5, 5]	, Feb :	[ 5, 5, 4, 5, 5]	, Mar :	[ 5, 5, 5, 5]	, Apr :	[ 5, 5, 5, 5]	, Mai :	[ 5, 5, 5, 5 ,5]	, Jun :	[ 5, 5, 5, 5]	, Jul :	[ 5, 5, 5, 5]	, Aug :	[0, 0, 0, 0,0]		, Sep :	[ 5, 5, 5, 5]	, Oct : 	[ 5, 5, 5, 5 ,5]	, Nov :	[ 5, 5, 5, 5]	, Dec :	[ -1, -1, -1, -1 ], Team : "Web"	},
 ];
 
 //Templates for the input data
@@ -176,12 +177,14 @@ request.onupgradeneeded = e => {
 
     if (!workersDB.objectStoreNames.contains("year2017Store")){
         const yearStore07 = workersDB.createObjectStore("year2017Store" , {keyPath :"WorkerId"}); 
-        yearStore07.createIndex("Name","Name", {unique : false});    
+        yearStore07.createIndex("Name","Name", {unique : false});
+        yearStore07.createIndex("Team","Team", {unique : false});    
     }
 
     if (!workersDB.objectStoreNames.contains("year2016Store")){
         const yearStore06 = workersDB.createObjectStore("year2016Store" , {keyPath :"WorkerId"});
         yearStore06.createIndex("Name","Name", {unique : false});  
+        yearStore06.createIndex("Team","Team", {unique : false}); 
     }
     
     alert(`upgrade is called database name: ${workersDB.name} version : ${workersDB.version}`);

@@ -311,6 +311,7 @@ function selectTeam(){
         
 }
 
+//Expending and hiding the dropdown from the New button
 function expendDiv(){
     const dropdownDiv = document.getElementById("dorpdownDiv") as HTMLDivElement;
     const dropdownBtn = document.getElementById("dropdownBtn") as HTMLButtonElement;
@@ -324,9 +325,27 @@ function expendDiv(){
     }
 }
 
-
+//Closing the team form div
 function closeTeamForm(){
     const parentNode = document.getElementById("nameNode") as HTMLParagraphElement;
     const div = document.getElementById("inputTeamDiv");
     parentNode.removeChild(div);
+}
+
+//Closing the project form div
+function closeProjectForm(){
+    const parentNode = document.getElementById("nameNode") as HTMLParagraphElement;
+    const div = document.getElementById("inputProjectDiv");
+    parentNode.removeChild(div);
+}
+
+//Checking if worker exists for selected team/year in the new project form
+function selectWorker(){
+    const workerSelect = document.getElementById("projectWorkerSelect") as HTMLSelectElement;
+    const info = document.getElementById("infoProject") as HTMLParagraphElement;
+    if(workerSelect.length == 1){
+        info.innerHTML = "No worker for selected team/year"
+    }else{
+        info.innerHTML = "";
+    }
 }
